@@ -1,0 +1,140 @@
+<section id="page-smoking-interactive">
+	<article class="left">
+		<h1>Smoking</h1>
+		<h2>My smoking lung</h2>
+		<p>Enter your AGE, GENDER &amp; HEIGHT on the control panel. Did you blow into the spirometer? If yes, enter your value on the control panel.</p>
+		<p>See what will happen to your lung function if you smoke: choose the options below to see the impact of smoking 0, 1, or 2 packs of cigarettes a day.</p>
+        <p>The <font color="orange">Orange</font> line is the baseline for healthy people. The <font color="green">Green</font> line is when you have never smoked. The <font color="red">Red</font> line is when you started smoking at the age of 25.</p>
+		<a class="nav-button" href="#/smoking">Go back to SMOKING</a>
+	</article>
+	<article class="right">
+		<div class="control-panel">
+			<div id="age-control">
+				<p>Age</p>
+				<div class="control" data-name="age" data-min="11" data-max="80" data-step="1" data-value="18">
+					<div class="control-button" data-value="+"></div>
+					<div class="control-value"></div>
+					<div class="control-button" data-value="-"></div>
+				</div>
+			</div>
+			<div id="gender-control">
+				<p>Gender</p>
+				<div class="control" data-name="gender" data-value="F">
+					<div class="control-button" data-value="F"></div>
+					<div class="control-value"></div>
+					<div class="control-button" data-value="M"></div>
+				</div>
+			</div>
+			<div id="fev-control">
+				<p>FEV1</p>
+				<div class="control" data-name="fev" data-min="1.0" data-max="5.0" data-step="0.1" data-value="3.3">
+					<div class="control-button" data-value="+"></div>
+					<div class="control-value"></div>
+					<div class="control-button" data-value="-"></div>
+				</div>
+			</div>
+		</div>
+		<div id="fev1_plot" class="plot"></div>
+	</article>
+	<div id="smoking-packs">
+		<a data-condition="mild" href="#/smoking-interactive/mild">0<br>packs</a>
+		<a data-condition="moderate" href="#/smoking-interactive/moderate">1<br>pack</a>
+		<a data-condition="severe" href="#/smoking-interactive/severe">2<br>packs</a>
+	</div>
+    <div id="button-area">
+        <div id="heal-me" class="clickable button green">HEAL ME</div>
+        <div id="switch" class="clickable button">SWITCH<br>MODEL</div>
+    </div>
+</section>
+
+<script>
+let loadedModel = '';
+function load(model) {
+    if (model == 'airways') {
+        loadScene({
+            vs: 'shaders/airways.vs',
+            fs: 'shaders/airways.fs',
+            view: 'models/smoker_and_asthmatic_flow_view.json',
+            models: ['models/smoker_and_asthmatic_flow_1.json'],
+        }, airwaysUniforms);
+    } else {
+        loadScene({
+            vs: 'shaders/surface.vs',
+            fs: 'shaders/surface.fs',
+            view: 'models/surface_view.json',
+            models: [
+                'models/surface_1.json',
+                'models/surface_2.json',
+                'models/surface_3.json',
+                'models/surface_4.json',
+                'models/surface_5.json',
+                'models/surface_6.json',
+            ],
+        }, surfaceUniforms);
+    }
+    loadedModel = model;
+}
+load('airways');
+
+let fev1_plot = initFEV1Plot("fev1_plot");
+updateFEV1Plot(fev1_plot);
+
+let buttons = document.querySelectorAll('#smoking-packs a');
+for (let i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener('click', function(e) {
+        setCondition(this.dataset.condition);
+        updateFEV1Plot(fev1_plot);
+    });
+}
+
+function setCondition(condition) {
+	if (condition === 'moderate') {
+		airwaysUniforms['smokingSeverity']['value'] = 0.5
+        surfaceUniforms['severity']['value'] = 0.4
+	} else if (condition === 'severe') {
+		airwaysUniforms['smokingSeverity']['value'] = 1.0
+        surfaceUniforms['severity']['value'] = 0.8
+	} else {
+		condition = 'mild';
+		airwaysUniforms['smokingSeverity']['value'] = 0.0
+        surfaceUniforms['severity']['value'] = 0.0
+	}
+
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove('active');
+    }
+	let button = document.querySelector('#smoking-packs a[data-condition="' + condition + '"]');
+	if (button) {
+		button.classList.add('active');
+	}
+}
+setCondition(getURLSegment(1));
+
+let controls = document.querySelectorAll('.control');
+for (let i = 0; i < controls.length; i++) {
+	controls[i].addEventListener('changed', function(e) {
+        updateFEV1Plot(fev1_plot);
+	});
+}
+
+document.getElementById('heal-me').addEventListener('click', function(e){
+    if (airwaysUniforms['smokingSeverity']['value'] == 0.0) {
+        setCondition('severe');
+        this.innerHTML = 'HEAL ME';
+        this.classList.add('green');
+    } else {
+        setCondition('mild');
+        this.innerHTML = 'BACK';
+        this.classList.remove('green');
+    }
+    updateFEV1Plot(fev1_plot);
+});
+
+document.getElementById('switch').addEventListener('click', function(e){
+    let model = 'airways';
+    if (loadedModel == 'airways') {
+        model = 'surface';
+    }
+    load(model);
+});
+</script>

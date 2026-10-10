@@ -1,0 +1,59 @@
+<section id="page-asthma">
+	<article class="left">
+		<h1>Asthma</h1>
+        <p>Asthma causes airways to become narrower which makes it harder to get air into the lungs. This happens because the muscle cells that wrap around the airways becomes tighter. Sometimes extra mucus is made and this can block airways. The narrowing and/or blockage of airways reduces the amount of air flow that can reach the gas exchange surface and can make us feel breathless.</p>
+        <p>Select an option from MILD, MODERATE, and SEVERE asthma to see how flow of air is altered.</p>
+		<a class="nav-button" href="#/asthma-lung-function">Learn more about<br>MEASURING LUNG<br>FUNCTION</a>
+	</article>
+	<article class="right">
+		<p>When the airways constrict during an asthma attack, this causes the air delivery to be ‘patchy’. Some patches of lung get a small amount of air, and others get more air than usual.</p>
+		<ul>
+			<li>Gas exchange is worse</li>
+			<li>The breathing muscles have to work harder to breathe</li>
+			<li>Much more energy is required just to breathe, which is distressing for the patient</li>
+		</ul>
+        <p>In this model <font color="green">Green</font> is good, <font color="red">Red</font> is too high, and <font color="blue">Blue</font> is too low.</p>
+		</ul>
+	</article>
+	<div id="asthma-conditions">
+		<a data-condition="mild" href="#/asthma/mild">Mild</a>
+		<a data-condition="moderate" href="#/asthma/moderate">Moderate</a>
+		<a data-condition="severe" href="#/asthma/severe">Severe</a>
+	</div>
+</section>
+
+<script>
+loadScene({
+	vs: 'shaders/airways.vs',
+	fs: 'shaders/airways.fs',
+	view: 'models/smoker_and_asthmatic_flow_view.json',
+	models: ['models/smoker_and_asthmatic_flow_1.json'],
+}, airwaysUniforms);
+
+function setCondition(condition) {
+	if (condition === 'moderate') {
+		airwaysUniforms['asthmaSeverity']['value'] = 0.6
+	} else if (condition === 'severe') {
+		airwaysUniforms['asthmaSeverity']['value'] = 1.0
+	} else {
+		condition = 'mild';
+		airwaysUniforms['asthmaSeverity']['value'] = 0.2
+	}
+
+	let button = document.querySelector('#asthma-conditions a[data-condition="' + condition + '"]');
+	if (button) {
+		button.classList.add('active');
+	}
+}
+setCondition(getURLSegment(1));
+
+const buttons = document.querySelectorAll('#asthma-conditions a');
+for (let i = 0; i < buttons.length; i++) {
+	buttons[i].addEventListener('click', function(e) {
+		for (let i = 0; i < buttons.length; i++) {
+			buttons[i].classList.remove('active');
+		}
+		setCondition(this.dataset.condition);
+	});
+}
+</script>

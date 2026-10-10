@@ -1,0 +1,488 @@
+@font-face {
+	font-family: 'Moon';
+	src: url('fonts/MoonBold.woff2') format('woff2'),
+		 url('fonts/MoonBold.woff') format('woff');
+	font-weight: bold;
+	font-style: normal;
+	font-display: block;
+}
+
+@font-face {
+	font-family: 'Moon';
+	src: url('fonts/MoonLight.woff2') format('woff2'),
+		 url('fonts/MoonLight.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+	font-display: block;
+}
+
+@font-face {
+	font-family: 'Titillium';
+	src: url('fonts/Titillium-Bold.woff2') format('woff2'),
+		 url('fonts/Titillium-Bold.woff') format('woff');
+	font-weight: bold;
+	font-style: normal;
+	font-display: block;
+}
+
+@font-face {
+	font-family: 'Titillium';
+	src: url('fonts/Titillium-Regular.woff2') format('woff2'),
+		 url('fonts/Titillium-Regular.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+	font-display: block;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html, body {
+	pointer-events: none;
+	/*user-select: none;*/
+
+	position: relative;
+	z-index: -2;
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	overflow: hidden;
+
+	background: black;
+	color: white;
+	font-family: Titillium, sans-serif;
+	font-size: min(1.7vw, 18pt);
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: Moon, sans-serif;
+}
+
+h1 {
+	margin: 0;
+	color: #00FBE8;
+	font-size: 278%;
+}
+
+h2 {
+	margin-top: 0;
+	color: #00FBE8;
+	font-size: 111%;
+}
+
+header, footer, section, nav, article, aside {
+	padding: 0;
+	margin: 0;
+}
+
+a,
+.clickable {
+	cursor: pointer;
+	pointer-events: auto;
+}
+
+a > img {
+	display: inline-block;
+}
+
+/* Loading spinner */
+#loader {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-left: -5vw;
+	margin-top: -5vw;
+	overflow: hidden;
+
+	visibility: hidden;
+	opacity: 0;
+	transition: visibility 0s .2s, opacity .2s linear;
+}
+
+#loader.loading {
+	visibility: visible;
+	opacity: 1;
+	transition: opacity .2s linear;
+}
+
+#loader .spinner {
+	border: 1vw solid #202020;
+    border-top: 1vw solid #00FBE8;
+    border-radius: 50%;
+    width: 10vw;
+    height: 10vw;
+    animation: spin 1.5s linear infinite;
+}
+
+#loader p {
+	position: absolute;
+	top:50%;
+	margin:0;
+	width: 100%;
+	text-align:center;
+	transform: translateY(-50%);
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Pages */
+#pages {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+}
+
+/* Elements */
+#branding {
+	position: absolute;
+	bottom: 0;
+	background: white;
+	width: 204px;
+	padding: 2px;
+	font-size: 0; /* hack to remove whitespace */
+}
+
+#logo-turanga,
+#logo-medtech {
+	width: 100px;
+}
+
+#navigation {
+	position: absolute;
+	right: 1vw;
+	bottom: 1vw;
+
+	display: flex;
+}
+
+#navigation > a {
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	cursor: pointer;
+	width: 8vw;
+	height: 8vw;
+}
+
+#navigation > a.breathing {
+	background-image: url(images/breathing.svg);
+}
+
+#navigation > a.asthma {
+	background-image: url(images/asthma.svg);
+}
+
+#navigation > a.smoking {
+	background-image: url(images/smoking.svg);
+}
+
+#top-buttons {
+	position: absolute;
+	top: 1vw;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+	width: 30vw;
+
+	display: flex;
+	align-items: center;
+}
+
+#play {
+	background-image: url(images/play.svg);
+}
+
+#play.playing {
+	background-image: url(images/pause.svg);
+}
+
+#information {
+	background-image: url(images/information.svg);
+}
+
+#renderer {
+	pointer-events: auto;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+}
+
+article {
+	visibility: visible;
+	opacity: 1;
+	transition: opacity .2s linear;
+}
+
+article.hidden {
+	visibility: hidden;
+	opacity: 0;
+	transition: visibility 0s .2s, opacity .2s linear;
+}
+
+article.left {
+	position: absolute;
+	width: 30vw;
+	margin: 1vw;
+}
+
+article.right {
+	position: absolute;
+	right: 0;
+	width: 30vw;
+	margin: 1vw;
+}
+
+.nav-button {
+	background-image: url(images/question.svg);
+    background-repeat: no-repeat;
+	background-position: left center;
+	padding-left: 7.5vw;
+	height: 6vw;
+
+	display: flex;
+	align-items: center;
+	text-decoration: none;
+	color: white;
+}
+
+.control-panel {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+}
+
+.control-panel > div {
+	width: 7vw;
+}
+
+.control-panel > div > p {
+	margin-top: 0;
+	margin-bottom: 0.5vw;
+	text-align: center;
+}
+
+.control {
+	display: block;
+    background-repeat: no-repeat;
+	background-size: 100% 100%;
+	width: 6vw;
+	height: 12vw;
+	margin: 0.5vw;
+}
+
+#age-control .control {
+	background-image: url(images/control_yellow.svg);
+}
+
+#height-control .control {
+	background-image: url(images/control_green.svg);
+	font-size: 80%;
+}
+
+#gender-control .control{
+	background-image: url(images/control_blue_mf.svg);
+}
+
+#fev-control .control{
+	background-image: url(images/control_blue.svg);
+}
+
+.control div.control-button {
+	cursor: pointer;
+	pointer-events: auto;
+	height: 3vw;
+}
+
+.control div.control-value {
+	height: 6vw;
+	color: #4A4A5B;
+    font-size: 80%;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+
+body[data-page="index"] #top-buttons,
+body[data-page="index"] #navigation {
+    display: none;
+}
+
+#page-index {
+	color: grey;
+	font-size: 222%;
+	white-space: nowrap;
+	line-height: 1;
+}
+
+#page-index .start {
+	position: absolute;
+	bottom: 3vw;
+	height: 9vw;
+	width: 35vw;
+    padding-left: 1em;
+}
+
+#page-index .info {
+	position: absolute;
+	right: 0;
+	bottom: 3vw;
+	height: 9vw;
+	width: 50vw;
+}
+
+#page-index strong {
+	font-family: Moon;
+}
+
+#page-index a {
+	text-decoration: none;
+	color: grey;
+}
+
+#page-index img {
+	float: left;
+	height: 100%;
+	padding-right: 0.5em;
+}
+
+#asthma-conditions,
+#smoking-packs {
+	position: absolute;
+	bottom: 5vw;
+	width: 100%;
+
+	display: flex;
+	justify-content: center;
+    font-size: min(1.5vw,100%);
+}
+
+#smoking-packs {
+    bottom: 2vw;
+}
+
+.button,
+#asthma-conditions > a,
+#smoking-packs > a {
+	background-image: url(images/button_grey.svg);
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	cursor: pointer;
+	width: 6vw;
+	height: 6vw;
+	margin: 0 0.5vw;
+	font-size: 85%;
+	line-height: 100%;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+
+	text-decoration: none;
+	color: white;
+}
+
+.button.green,
+#asthma-conditions > a.active[data-condition="mild"],
+#smoking-packs > a.active[data-condition="mild"] {
+	background-image: url(images/button_green.svg);
+}
+
+.button.yellow,
+#asthma-conditions > a.active[data-condition="moderate"],
+#smoking-packs > a.active[data-condition="moderate"] {
+	background-image: url(images/button_yellow.svg);
+}
+
+.button.pink,
+#asthma-conditions > a.active[data-condition="severe"],
+#smoking-packs > a.active[data-condition="severe"] {
+	background-image: url(images/button_pink.svg);
+}
+
+#button-area {
+    position: absolute;
+    bottom: 8vw;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-size: min(1.5vw,100%);
+}
+
+#button-area > .button:first-child {
+    margin-left: 0;
+}
+
+/* Graphs */
+.plot svg {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+.plot svg .data {
+	fill: none;
+	stroke: orange;
+	stroke-width: 5;
+}
+
+.plot svg .background {
+	fill: rgba(0,0,0,0.5);
+}
+
+.plot svg .axes {
+	fill: none;
+	stroke: white;
+	stroke-width: 2;
+	/*shape-rendering: crispEdges;*/
+}
+
+.plot svg .xlabel,
+.plot svg .ylabel {
+	fill: white;
+	text-anchor: middle;
+    font-size: max(min(1.7vw,12pt),50%);
+}
+
+.plot svg .xlabel {
+	transform: translate(0, 1em);
+}
+
+.plot svg .ylabel {
+	transform: rotate(-90deg) translate(0, -0.5em);
+}
+
+.plot svg .marker {
+	fill: none;
+	stroke: red;
+	stroke-width: 5;
+}
+
+#fev1_plot svg {
+    width: 75%;
+    height: 75%;
+    margin-left: auto;
+}
+
+#fev1_plot .normal {
+    fill: none;
+    stroke: orange;
+    stroke-width: 5;
+}
+#fev1_plot .you {
+    fill: none;
+    stroke: green;
+    stroke-width: 5;
+}
+#fev1_plot .you-smoking {
+    fill: none;
+    stroke: red;
+    stroke-width: 5;
+}

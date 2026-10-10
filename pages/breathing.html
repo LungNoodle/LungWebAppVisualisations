@@ -1,0 +1,30 @@
+<section id="page-breathing">
+	<article class="left">
+		<h1>The Lungs</h1>
+		<h2>Normal breathing</h2>
+		<p>When the healthy lung breathes in the upright position, the lung tissue that is closest to the diaphragm (the muscle that sits beneath the lungs) expands the most, and the tissue at the top of the lung expands the least.</p>
+		<p>We usually breathe in just as much air as we need to supply oxygen for energy for the activities that we are doing.</p>
+		<a class="nav-button" href="#/breathing-gas-exchange">Learn more about GAS<br>EXCHANGE</a>
+	</article>
+	<article class="right">
+		<div id="breathing-plot" class="plot"></div>
+	</article>
+</section>
+
+<script>
+loadGraph('breathing-plot', 'graphdata/breathing.json');
+
+loadScene({
+	vs: 'shaders/surface.vs',
+	fs: 'shaders/surface.fs',
+	view: 'models/surface_view.json',
+	models: [
+		'models/surface_1.json',
+		'models/surface_2.json',
+		'models/surface_3.json',
+		'models/surface_4.json',
+		'models/surface_5.json',
+		'models/surface_6.json',
+	],
+}, surfaceUniforms);
+</script>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>MedTech CORE - Lung Simulation</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0">
+	<meta property="og:url" content="https://sites.bioeng.auckland.ac.nz/medtech/lung/">
+	<meta property="og:type" content="website">
+	<meta property="og:title" content="Personalised Lung Estimation and Visualisation.">
+	<meta property="og:description" content="Using parameters from an individual estimate the state of the lung and provide a 3D visualisation representative of the individual.">
+	<meta property="og:image" content="images/lungapp.jpg">
+	<link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body data-page="" data-severity="">
+	<div id="renderer"></div>
+	<div id="pages"></div>
+	<div id="top-buttons">
+		<a id="play" class="nav-button"></a>
+		<a id="information" class="nav-button">Less information</a>
+	</div>
+	<!--<div id="branding">
+		<img id="logo-turanga" src="images/turanga_banner_0_transparent.png">
+		<img id="logo-medtech" src="images/MedTech CoRE Logo.png">
+	</div>-->
+	<div id="navigation">
+		<a class="breathing" href="#/breathing"></a>
+		<a class="asthma" href="#/asthma"></a>
+		<a class="smoking" href="#/smoking"></a>
+	</div>
+	<div id="loader">
+		<div class="spinner"></div>
+		<p>Loading</p>
+	</div>
+	<script src="lib/pako_inflate.min.js"></script>
+	<script src="lib/zinc-0.29.5.min.js"></script>
+	<script src="lib/svg-2.7.1.min.js"></script>
+	<script src="js/webgl_check.js"></script>
+	<script src="js/globals.js"></script>
+	<script src="js/graphs.js"></script>
+	<script src="js/scene.js"></script>
+	<script src="js/main.js"></script>
+	<script src="js/controls.js"></script>
+    <script src="js/charts.js"></script>
+</body>
+</html>

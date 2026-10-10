@@ -1,0 +1,30 @@
+<section id="page-index">
+	<a class="start" href="#/breathing">
+		<img src="css/images/medtech_click.svg">
+		<strong>Click here</strong><br>For more info
+	</a>
+	<div class="info">
+		<img src="css/images/medtech_spin.svg">
+		<strong>Spin &amp; zoom</strong><br>To take a closer look
+	</div>
+	<!--<div id="qr_code" class="toggleByPageNumber page_0 Level3 VMin18Height PositionAbsolute">
+		<img src="images/MedTech_CoRE_Lungs.png" style="height: 100%;">
+	</div>-->
+</section>
+
+<script>
+loadScene({
+	vs: 'shaders/surface.vs',
+	fs: 'shaders/surface.fs',
+	view: 'models/surface_view.json',
+	models: [
+		'models/surface_1.json',
+		'models/surface_2.json',
+		'models/surface_3.json',
+		'models/surface_4.json',
+		'models/surface_5.json',
+		'models/surface_6.json',
+	],
+}, surfaceUniforms);
+document.getElementById('play').click();
+</script>

@@ -1,0 +1,54 @@
+<section id="page-asthma-lung-function">
+	<article class="left">
+		<h1>Asthma</h1>
+		<h2>Measuring lung function</h2>
+		<p>The classic test of lung function (to tell us how healthy the lung is) is FEV1. This measures the volume of air that is forcefully exhaled from the lung in one second.</p>
+		<p>The size of FEV1 depends on the size of a person’s lungs, but it also depends on how stretchy or floppy the lung tissue and airways are.</p>
+		<p>For a healthy lung at least 80% of the total air that a person can breathe out will be expired in the first one second.</p>
+		<a class="nav-button" href="#/asthma">Go back to ASTHMA</a>
+	</article>
+	<article class="right">
+	</article>
+	<div id="asthma-conditions">
+		<a data-condition="mild" href="#/asthma-lung-function/mild">Mild</a>
+		<a data-condition="moderate" href="#/asthma-lung-function/moderate">Moderate</a>
+		<a data-condition="severe" href="#/asthma-lung-function/severe">Severe</a>
+	</div>
+</section>
+
+<script>
+loadScene({
+	vs: 'shaders/airways.vs',
+	fs: 'shaders/airways.fs',
+	view: 'models/smoker_and_asthmatic_flow_view.json',
+	models: ['models/smoker_and_asthmatic_flow_1.json'],
+}, airwaysUniforms);
+
+function setCondition(condition) {
+	if (condition === 'mild') {
+		airwaysUniforms['asthmaSeverity']['value'] = 0.2
+	} else if (condition === 'moderate') {
+		airwaysUniforms['asthmaSeverity']['value'] = 0.6
+	} else if (condition === 'severe') {
+		airwaysUniforms['asthmaSeverity']['value'] = 1.0
+	} else {
+		airwaysUniforms['asthmaSeverity']['value'] = 0.0
+	}
+	
+	let button = document.querySelector('#asthma-conditions a[data-condition="' + condition + '"]');
+	if (button) {
+		button.classList.add('active');
+	}
+}
+setCondition(getURLSegment(1));
+
+const buttons = document.querySelectorAll('#asthma-conditions a');
+for (let i = 0; i < buttons.length; i++) {
+	buttons[i].addEventListener('click', function(e) {
+		for (let i = 0; i < buttons.length; i++) {
+			buttons[i].classList.remove('active');
+		}
+		setCondition(this.dataset.condition);
+	});
+}
+</script>
